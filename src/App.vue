@@ -1,9 +1,21 @@
 <template>
   <div id="app">
+    <Form summary v-model="formValid">
+      <template v-slot:summary="{ errors }">
+        <h3>
+          Custom Summary
+        </h3>
+        <div>
+          <ul>
+            <li v-for="error in errors" :key="'error-'+error+''">{{error}}</li>
+          </ul>
+        </div>
+      </template>
      <TextField label="First Name" v-model="form.firstName" 
      :rules="firstNameRules" :textLimit="15"></TextField>
      
-     <TextField label="Last Name" v-model="form.lastName" :textLimit="15"></TextField>
+     <TextField label="Last Name" v-model="form.lastName" 
+     :rules="lastNameRules" :textLimit="15"></TextField>
      
      <SelectField
       label="Gender" 
@@ -25,10 +37,15 @@
       ></TextAreaField>
 
      <div>{{form}}</div>
+
+     <button v-if="formValid">Submit</button>
+     <span v-else>Please fill out the form</span>
+    </Form>
   </div>
 </template>
 
 <script>
+import Form from "./components/Form"
 import TextField from "./components/TextField"
 import SelectField from "./components/SelectField"
 import TextAreaField from "./components/TextAreaField"
@@ -39,8 +56,10 @@ export default {
     return{
       firstNameRules:[
         v => v.length > 0 || "First name is required",
-        v => v.length < 10 || "First name has to be less than 10 characters",
         v => !/\s/.test(v) || "No white spaces buddy"
+      ],
+      lastNameRules:[
+        v => v.length > 0 || "Last name is required",
       ],
       form:{
       firstName: "",
@@ -48,14 +67,16 @@ export default {
       gender: "",
       age: "",
       bio: ""
-      }
+      },
+      formValid: false
     }
   },
   
   components: { 
     TextField,
     SelectField,
-    TextAreaField
+    TextAreaField,
+    Form
   },
   computed:{
     fullName(){
@@ -73,7 +94,7 @@ export default {
       for(let i=16; i<65; i++)
         result.push({value: i, text: i});
       return result;
-    }
+    },
   }
 };
 </script>

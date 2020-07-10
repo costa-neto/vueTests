@@ -27,7 +27,9 @@ export default {
     }
   },
   watch:{
-      value: function(newValue,oldValue){
+      value:{
+        immediate:true,
+        handler: function(newValue,oldValue){
         if(this.rules.length>0){
           this.tested = true;
           for(let i=0; i<this.rules.length;i++){
@@ -38,6 +40,7 @@ export default {
 
         if(newValue.length > this.textLimit) this.$emit('input', oldValue);
       }
+  }
   },
   computed:{
     inputCount(){
