@@ -1,46 +1,65 @@
 <template>
   <div id="app">
-     <TextField label="First Name" v-model="firstName" :textLimit="15"></TextField>
-     <TextField label="Last Name" v-model="lastName" :textLimit="15"></TextField>
+     <TextField label="First Name" v-model="form.firstName" 
+     :rules="firstNameRules" :textLimit="15"></TextField>
+     
+     <TextField label="Last Name" v-model="form.lastName" :textLimit="15"></TextField>
      
      <SelectField
       label="Gender" 
-      v-model="gender" 
+      v-model="form.gender" 
       placeholder="Select your gender"
       :options="genderList"></SelectField>
 
       <SelectField
       label="Age" 
-      v-model="age" 
+      v-model="form.age" 
       placeholder="Select your age"
       :options="ageList"></SelectField>
 
+      <TextAreaField label="Bio"
+      v-model="form.bio"
+      :textLimit="255"
+      resize="vertical"
+      autoResize
+      ></TextAreaField>
 
-     <div>{{fullName}} - {{gender}} - {{age}} years old</div>
+     <div>{{form}}</div>
   </div>
 </template>
 
 <script>
 import TextField from "./components/TextField"
 import SelectField from "./components/SelectField"
+import TextAreaField from "./components/TextAreaField"
 
 export default {
   name: "App",
   data(){
     return{
+      firstNameRules:[
+        v => v.length > 0 || "First name is required",
+        v => v.length < 10 || "First name has to be less than 10 characters",
+        v => !/\s/.test(v) || "No white spaces buddy"
+      ],
+      form:{
       firstName: "",
       lastName: "",
       gender: "",
-      age: ""
+      age: "",
+      bio: ""
+      }
     }
   },
+  
   components: { 
     TextField,
-    SelectField
+    SelectField,
+    TextAreaField
   },
   computed:{
     fullName(){
-      return this.firstName + " " + this.lastName;
+      return this.form.firstName + " " + this.form.lastName;
     },
     genderList(){
       return[
@@ -62,24 +81,6 @@ export default {
 <style lang="stylus">
 #app
   margin-top 60px
-
-.text-input
-label 
-  display  block
-
-input 
-  display block
-  width 100%
-
-input.valid
-  border 1px solid green
-
-input.invalid 
-  border 1px solid red
-
-.validation
-  text-align right 
-  font-size 12px
 
 
 </style>
