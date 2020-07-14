@@ -12,6 +12,7 @@
 
 <script>
 export default {
+    name: "a-form",
     props:{
         value:{required: true, type: Boolean},
         summary:{required: false, type: Boolean}

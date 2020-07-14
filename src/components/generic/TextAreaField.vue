@@ -12,6 +12,7 @@
 
 <script>
 export default {
+    name: "a-textarea",
     props: {
         label: {required: false, type: String},
         value: {required: true, type: String},

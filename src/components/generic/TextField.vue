@@ -2,7 +2,7 @@
     <div :class="validationClass" class="text-input" style="width: 200px;">
       <div>
         <label>{{label}}</label>
-        <input  :value="value" @input="$emit('input', $event.target.value)">
+        <input :type="type" :value="value" @input="$emit('input', $event.target.value)">
       </div>
     <div class="validation">
       <div v-if="valid !== true ">{{valid}}</div>
@@ -14,11 +14,13 @@
 
 <script>
 export default {
+    name: "a-input",
     props:{
       value: {required: true, type: String},
       textLimit: {required: false, type: Number},
       label: {required: false, type: String},
-      rules: { required: false, type: Array, default: () => []}
+      rules: { required: false, type: Array, default: () => []},
+      type: { required: false, type: String}
   },
   data(){
     return{
