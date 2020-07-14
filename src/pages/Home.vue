@@ -81,8 +81,23 @@ export default {
       for(let i=16; i<65; i++)
         result.push({value: i, text: i});
       return result;
-    },
-  }
+    }
+  },
+  // beforeRouteEnter(to,from,next){
+  //     //console.log("Route enter, fetch some data");
+  //     let formString = localStorage.getItem('home-form') || null;
+  //     next(vm => {
+        
+  //       if(formString !== null && formString !== "")
+  //         vm.form = JSON.parse(formString);
+  //     });
+  // },
+  // beforeRouteLeave(to,from,next){
+  //     //console.log("route leave, save/cleanup state");
+  //     let formString = JSON.stringify(this.form);
+  //     localStorage.setItem('home-form', formString);
+  //     next();
+  // }
 }
 </script>
 

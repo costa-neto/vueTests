@@ -4,7 +4,7 @@
         <a-input label="Password" type="password" :rules="passwordRules" v-model="form.password" 
             :textLimit="15"/>
 
-        <button>Login</button>
+        <button @click="login">Login</button>
     </a-form>
 </template>
 
@@ -28,6 +28,11 @@ export default {
         };
         
     },
+    methods: {
+        login(){
+            this.$router.push('profile')
+        }
+    }
     
 }
 </script>
