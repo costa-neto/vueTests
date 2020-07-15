@@ -37,7 +37,7 @@
 
      <div>{{form}}</div>
 
-     <button v-if="formValid">Submit</button>
+     <button v-if="formValid" @click="createProfile">Submit</button>
      <span v-else>Please fill out the form</span>
     </a-form>
 </template>
@@ -61,10 +61,19 @@ export default {
       age: "",
       bio: ""
       },
-      formValid: false
+      formValid: true
     }
   },
-  
+  methods: {
+      createProfile(){
+        this.$api.post("Profile/", this.form).then(res => {
+                //todo store result in vuex
+                alert(res.data);
+            }).catch(error => {
+                    console.log(error.response)
+              });
+      }
+  },
   computed:{
     fullName(){
       return this.form.firstName + " " + this.form.lastName;

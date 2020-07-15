@@ -6,21 +6,32 @@
         <div>
             <router-view></router-view>
         </div>
+        <div>
+            <p v-for="p in profiles" :key="p.Id">
+                {{p.firstName}}
+            </p>
+        </div>
     </div>    
 </template>
 
 <script>
+
 export default {
     data(){
         return {
-            name: ''
+            name: '',
+            profiles: []
         }
     },
     
     created() {
         let name = this.$route.params.name;
-        console.log(name);
+        //console.log(name);
         this.name = name === undefined ? "" : name;
+        this.$api.get('Profile')
+            .then(res => {
+                this.profiles = res.data;
+            });
     }
 }
 </script>
