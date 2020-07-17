@@ -8,7 +8,7 @@
         </div>
         <div>
             <p v-for="p in profiles" :key="p.Id">
-                {{p.firstName}}
+                {{p.firstName}} - {{p.lastName}} - {{p.age}} - {{p.gender}} - {{p.bio}}
             </p>
         </div>
     </div>    
