@@ -35,16 +35,20 @@
       autoResize
       />
 
-     <div>{{form}}</div>
+     <!-- <div>{{form}}</div> -->
 
-     <a-sbutton :loading="loading"  @click="createProfile" :disabled="!formValid || loading">Bobo</a-sbutton>
-     
+     <a-sbutton :loading="loading"  @click="createProfile" :disabled="!formValid || loading">Create Profile</a-sbutton>
+     <!-- <vue-editor v-model="content"></vue-editor> -->
     </a-form>
 </template>
 
 <script>
+//import { VueEditor } from "vue2-editor";
 
 export default {
+    // components: {
+    //   VueEditor
+    // },
     data(){
     return{
       firstNameRules:[
@@ -71,7 +75,8 @@ export default {
         this.$api.post("Profile/", this.form).then(res => {
                 //todo store result in vuex
                 this.loading=false;
-                alert(res.data);
+                this.$store.commit("ADD_PROFILE", res.data)
+                //alert(res.data);
             }).catch(error => {
                     console.log(error.response)
               });

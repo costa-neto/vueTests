@@ -8,8 +8,18 @@
     <router-link to="/profile">Profile</router-link>
     </div>
     
-    <router-view></router-view>
-    
+    <div class="app">
+      <div class="main">
+        <router-view></router-view>
+      </div>
+      <div class="menu">
+          <router-link v-for="p in profiles"
+           :to="'/profile/'+p.firstName+''"
+           :key="p.Id">
+                {{p.firstName}} - {{p.lastName}}
+          </router-link>
+      </div>
+    </div>
     <!-- <component :is="component"></component> -->
   </div>
 </template>
@@ -20,6 +30,18 @@
 
 export default {
   name: "App",
+  created(){
+      this.$store.dispatch("LOAD_PROFILES",this.$api);
+      // this.$eventBus.$on('created-profile', (data) => {
+      //   this.profiles.push(data);
+      // })
+  },
+  computed: {
+    profiles() {
+      return this.$store.getters.GET_PROFILES;
+    }
+  }
+  
 };
 </script>
 
@@ -29,4 +51,9 @@ export default {
 
 a
   padding 0 5px
+
+.app
+  display flex
+  flex-direction row
+
 </style>

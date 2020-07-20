@@ -2,6 +2,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from './router';
 import axios from 'axios';
+import {store} from './stores/profiles';
 import "./components/generic/index";
 
 Vue.config.productionTip = false;
@@ -17,9 +18,11 @@ const axiosPlugin = {
   }
 }
 
+Vue.prototype.$eventBus = new Vue();
 Vue.use(axiosPlugin);
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount("#app");
