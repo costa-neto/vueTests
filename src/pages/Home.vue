@@ -37,13 +37,15 @@
 
      <!-- <div>{{form}}</div> -->
 
-     <a-sbutton :loading="loading"  @click="createProfile" :disabled="!formValid || loading">Create Profile</a-sbutton>
-     <!-- <vue-editor v-model="content"></vue-editor> -->
+     <a-sbutton :loading="loading"  @click="createProfile({ api: $api, form})" 
+     :disabled="!formValid || loading">Create Profile</a-sbutton>
+     <!-- <vue-editor v-model="content"></vue-editor>  -->
     </a-form>
 </template>
 
 <script>
 //import { VueEditor } from "vue2-editor";
+import { mapActions, mapState } from "vuex";
 
 export default {
     // components: {
@@ -65,24 +67,30 @@ export default {
       age: "",
       bio: ""
       },
-      loading:false,
+      //loading:false,
       formValid: false
     }
   },
   methods: {
-      createProfile(){
-        this.loading = true;
-        this.$api.post("Profile/", this.form).then(res => {
-                //todo store result in vuex
-                this.loading=false;
-                this.$store.commit("ADD_PROFILE", res.data)
-                //alert(res.data);
-            }).catch(error => {
-                    console.log(error.response)
-              });
-      }
-  },
+    ...mapActions('profiles', {
+      createProfile: 'CREATE_PROFILE'
+    }),
+  //     createProfile(){
+  //       this.loading = true;
+  //      this.$api.post("Profile/", this.form).then(res => {
+  //               //todo store result in vuex
+  //               this.loading=false;
+  //               this.$store.commit("ADD_PROFILE", res.data)
+  //               //alert(res.data);
+  //           }).catch(error => {
+  //                   console.log(error.response)
+  //             }); 
+  //     }
+  // },
   computed:{
+    ...mapState('profiles', {
+        loading: state => state.creatingProfile
+    }),
     fullName(){
       return this.form.firstName + " " + this.form.lastName;
     },
@@ -99,7 +107,7 @@ export default {
         result.push({value: i, text: i});
       return result;
     }
-  },
+  }
   // beforeRouteEnter(to,from,next){
   //     //console.log("Route enter, fetch some data");
   //     let formString = localStorage.getItem('home-form') || null;
@@ -115,6 +123,7 @@ export default {
   //     localStorage.setItem('home-form', formString);
   //     next();
   // }
+}
 }
 </script>
 

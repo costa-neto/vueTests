@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
 
 export default {
     // data(){
@@ -40,12 +41,12 @@ export default {
     //     }
     // },
     computed: {
+        ...mapGetters('profiles', {
+            getProfile: 'GET_PROFILE'
+        }),
         profile(){
-            let profiles = this.$store.getters.GET_PROFILES;
-            if(profiles.length <= 0) return null;
-            let name = this.$route.params.name;
-            return profiles.filter(
-                x => x.firstName === name)[0];
+            return this.getProfile(this.$route.params.name)
+            
         }
     }
 }

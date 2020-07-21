@@ -27,19 +27,28 @@
 <script>
 // import Home from "./pages/Home"
 // import Login from "./pages/Login"
+import {mapActions, mapState} from "vuex";
+
 
 export default {
   name: "App",
   created(){
-      this.$store.dispatch("LOAD_PROFILES",this.$api);
+      this.loadProfiles(this.$api)
+      //this.$store.dispatch("LOAD_PROFILES",this.$api);
       // this.$eventBus.$on('created-profile', (data) => {
       //   this.profiles.push(data);
       // })
   },
+  methods:{
+      ...mapActions('profiles',{
+        loadProfiles:'LOAD_PROFILES'
+  })
+  },
   computed: {
-    profiles() {
-      return this.$store.getters.GET_PROFILES;
-    }
+    ...mapState('profiles',{
+      profiles: state=> state.profiles
+
+    })
   }
   
 };
