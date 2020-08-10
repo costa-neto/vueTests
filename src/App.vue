@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <div class="loader" v-if="!ready">Loading</div>
+    <PopUp />
     <div>
       <!-- <a @click="page='home'">Home</a>
       <a @click="page='login'">Login</a> -->
@@ -27,24 +29,35 @@
 <script>
 // import Home from "./pages/Home"
 // import Login from "./pages/Login"
+import PopUp from './components/PopUp'
 import {mapActions, mapState} from "vuex";
 
 
 export default {
   name: "App",
+  components:{
+    PopUp
+  },
   created(){
-      this.loadProfiles(this.$api)
+      this.init();
+      this.loadProfiles(this.$api);
       //this.$store.dispatch("LOAD_PROFILES",this.$api);
       // this.$eventBus.$on('created-profile', (data) => {
       //   this.profiles.push(data);
       // })
   },
   methods:{
+    ...mapActions({
+      init: 'INIT_APP'
+    }),
       ...mapActions('profiles',{
         loadProfiles:'LOAD_PROFILES'
   })
   },
   computed: {
+    ...mapState({
+      ready:"appReady"
+    }),
     ...mapState('profiles',{
       profiles: state=> state.profiles
 
@@ -65,4 +78,11 @@ a
   display flex
   flex-direction row
 
+.loader
+  background #eee
+  position fixed
+  width 100%
+  height 100%
+  top 0
+  left 0
 </style>

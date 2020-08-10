@@ -74,7 +74,7 @@ export default {
   methods: {
     ...mapActions('profiles', {
       createProfile: 'CREATE_PROFILE'
-    }),
+    })
   //     createProfile(){
   //       this.loading = true;
   //      this.$api.post("Profile/", this.form).then(res => {
@@ -86,7 +86,7 @@ export default {
   //                   console.log(error.response)
   //             }); 
   //     }
-  // },
+  },
   computed:{
     ...mapState('profiles', {
         loading: state => state.creatingProfile
@@ -124,7 +124,7 @@ export default {
   //     next();
   // }
 }
-}
+
 </script>
 
 <style>

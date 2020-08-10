@@ -40,12 +40,13 @@ export default({
                 commit("SET_PROFILES",res.data);
             })
         },
-        CREATE_PROFILE({ commit }, payload){
+        CREATE_PROFILE({ commit, dispatch }, payload){
             let {api, form} = payload;
             commit('START_CREATING_PROFILE');
             return api.post("Profile/", form).then(res => {
                 //this.loading=false;
-                commit("ADD_PROFILE", res.data)
+                commit("ADD_PROFILE", res.data);
+                dispatch("popup/DISPLAY_POPUP", "Profile Created", {root: true})
                 //alert(res.data);
             }).catch(error => {
                     console.log(error.response)

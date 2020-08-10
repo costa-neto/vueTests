@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
+import {mapGetters, mapActions} from 'vuex';
 
 export default {
     // data(){
@@ -40,6 +40,20 @@ export default {
     //             });
     //     }
     // },
+    watch: {
+        profile: {
+            immediate: true,
+            handler(profile){
+                if(profile !== undefined)
+                this.setPopup("Selected Profile: "+profile.firstName);
+            }
+        }
+    },
+    methods: {
+        ...mapActions('popup',{
+            setPopup: 'DISPLAY_POPUP'
+        })
+    },
     computed: {
         ...mapGetters('profiles', {
             getProfile: 'GET_PROFILE'
